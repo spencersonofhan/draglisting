@@ -1,0 +1,24 @@
+.body {
+    background-color: lightblue;
+}
+
+.main {
+    background-color: darkorchid;
+    color: black;
+
+    margin-top: 0px;
+    padding-top: 0px;
+
+    border-style: ridge;
+    border-width: 10px;
+    border-radius: 5px;
+    border-color: gray;
+
+    text-align: center;
+}
+
+#nav {
+    list-style-type: 0;
+    margin: 0;
+    padding: 0;
+}
