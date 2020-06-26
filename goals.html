@@ -9,57 +9,64 @@
 
 	<body class="body">
 		<div class="navbar">
-			<a href="index.html">Home</a>
-			<a href="categories.html">Categories</a>
+			<a class="navbar" href="index.html">Home</a>
+			<a class="navbar"href="categories.html">Categories</a>
 			<a class="active" href="#">Goals</a>
-			<a id="login">Login</a>
-		</div>
+			<button id="login" onclick="document.getElementById('id01').style.display='block'">Login</button>
+			<div id="id01" class="modal">
+			  <span onclick="document.getElementById('id01').style.display='none'"
+				class="close" title="Close Modal">&times;</span>
 
+			  <form class="modal-content animate" action="!!!FIX!!!">
+			    <div class="container">
+			      <label id="logtext"><b>Username</b></label>
+			      <input type="text" name="uname" required>
+
+			      <label id="logtext"><b>Password</b></label>
+			      <input type="password" name="psw" required>
+
+			      <button id="loginfr" type="submit">Login</button>
+			    </div>
+			  </form>
+			</div>
+				<script>
+					// Get the modal
+					var modal = document.getElementById('id01');
+
+					// When the user clicks anywhere outside of the modal, close it
+					window.onclick = function(event) {
+					 if (event.target == modal) {
+						 modal.style.display = "none";
+					 }
+					}
+			</script>
+		</div>
+		</div>
 		<div class="main">
-            <h2>
-                This is a personal website project that will act as a tracker/notes for
-                anything that I can track. There are a few things that I want this website
-                to do.
-            </h2>
+      <h2>
+          This is a personal website project that will act as a tracker/notes for
+          anything that I can track. There are a few things that I want this website
+          to do.
+      </h2>
 			<ol>
-                <li>
-                    Be able to show (new to old chronologically) what I have
-                    seen in a categorized media type. This will include anime, movies, books
-											<ul>Make a form page that will send its data type to the database
-											</ul>
-                </li>
+        <ul>
+            Make entries/blog-posts about the things I'm interested in. For example, there will
+						be entries for books and another for movies. This will be the place that I'll write
+						reviews for individual pieces.
+							<ol>Make a form page that will send its data type to the database
+							</ol>
+        </ul>
 
-                <li>
-                    Incorporate a calendar that will act as a todo list. I want to be able to set
-                    monthly and weekly goals. When I check all the items off of a todo list
-                    I would like a picture of a cute anime girl jpg or gif to congratulate me
-                </li>
+        <li>
+            Incorporate a calendar that will act as a todo list. I want to be able to set
+            monthly and weekly goals. When I check all the items off of a todo list
+            I would like a picture of a cute anime girl jpg or gif to congratulate me
+        </li>
 
-                <li>
-                    Make the landing page real pretty
-                </li>
-            </ol>
+        <li>
+            Make the landing page real pretty
+        </li>
+      </ol>
 		</div>
-
-
-		<script>
-			var app = new Vue({
-				el: '#',
-
-				data: {
-
-				},
-
-				methods: {
-
-				},
-
-				computed: {
-				},
-
-				created(){
-				}
-			});
-		</script>
 	</body>
 </html>
