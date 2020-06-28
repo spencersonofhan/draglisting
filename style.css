@@ -94,6 +94,18 @@
   top: 2px;
 }
 
+#blog {
+
+}
+
+#selector {
+  margin-left: 10px;
+  margin-top: 10px;
+  display: inline-block;
+
+  font-size: 25px;
+}
+
 a.navbar {
   text-decoration: none;
 }
