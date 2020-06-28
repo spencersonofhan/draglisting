@@ -68,6 +68,8 @@
 						</option>
 					</select>
 				</div>
+				<div id="choiceBlock">
+				</div>
 		</div>
 
 		<!-- Using Vue to bring up certain textboxes for different entry options -->
@@ -81,21 +83,79 @@
 				},
 				methods: {
 					change: function(select) {
+						var choiceBlock = document.getElementById("choiceBlock")
+						try {
+							var test = document.getElementById("choiceBlock").lastElementChild
+							test.parentNode.removeChild(test);
+						}
+						catch(TypeError) {
+						}
+
+						// Blog post template
+						var entryBlock = document.createElement("div");
+						entryBlock.setAttribute("id", "entryBlock");
+
+						var nameText = document.createElement("p");
+						nameText.setAttribute("class", "entryHeader");
+						entryBlock.appendChild(nameText);
+
+						var NameInput = document.createElement("input");
+						NameInput.setAttribute("type", "text");
+						NameInput.setAttribute("class", "inputBox");
+						entryBlock.appendChild(NameInput);
+
+						var break1 = document.createElement("br");
+						entryBlock.appendChild(break1);
+
+						var createdText = document.createElement("p");
+						createdText.setAttribute("class", "entryHeader");
+						entryBlock.appendChild(createdText);
+
+						var createdInput = document.createElement("input");
+						createdInput.setAttribute("type", "text");
+						createdInput.setAttribute("class", "inputBox");
+						entryBlock.appendChild(createdInput);
+
+						var break2 = document.createElement("br");
+						entryBlock.appendChild(break2);
+
+						var tArea = document.createElement("textarea");
+						tArea.setAttribute("class", "tArea");
+						entryBlock.appendChild(tArea);
+
+						// Finds the value of the option selected
 						let option = select.currentTarget;
 						this.selected = this.options[String(option.getAttribute("value"))];
 
 						switch (this.selected) {
 							case 1: // album
-								console.log("album")
+								nameText.textContent = "Album name";
+								createdText.textContent = "Artist/band";
+
+								// var favoritesText = document.createElement("p");
+								// favoritesText.setAttribute("class", "entryHeader");
+								// favoritesText.textContent = "Favorite song\(s\)?";
+								// // albumBlock.appendChild(favoritesText);
+
+								choiceBlock.appendChild(entryBlock);
 								break;
 							case 2: // book
-								console.log("book")
+								nameText.textContent = "Book name";
+								createdText.textContent = "Author";
+
+								choiceBlock.appendChild(entryBlock);
 								break;
 							case 3: // movie
-								console.log("movie")
+								nameText.textContent = "Movie name";
+								createdText.textContent = "Director";
+
+								choiceBlock.appendChild(entryBlock);
 								break;
 							case 4: // vgame
-								console.log("video game")
+								nameText.textContent = "Game name";
+								createdText.textContent = "Created by";
+
+								choiceBlock.appendChild(entryBlock);
 								break;
 							case 5: // blog
 								console.log("blog")
