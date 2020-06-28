@@ -20,16 +20,24 @@
 .navbar {
   text-align: left;
   overflow: hidden;
+
   color: #f9f9f9;
   background-color: #333;
+
   padding: 5px;
 }
 
 .active {
   color: #2a5729;
   background-color: #0cc078;
+
   padding: 15px;
+
   text-decoration: none;
+}
+
+.goal {
+  margin: 20px;
 }
 
 #login {
@@ -43,8 +51,47 @@
 }
 
 #loginfr {
-
   margin-left: 391px;
+}
+
+#currentGoal {
+  background-color: #726a95;
+  color: #dee3de;
+}
+
+#fieldEntry {
+  text-align: center;
+}
+#newEntry {
+  background-color: #d167d6;
+	background: linear-gradient(to bottom, #d167d6 5%, #b8b4b8 100%);
+
+  box-shadow: 0px 1px 0px 0px #000;
+	border-radius: 6px;
+	border: 1px solid #ffdead;
+	display: inline-block;
+	cursor: pointer;
+  padding: 6px 24px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 20%;
+
+  postion: absolute;
+
+  color: #000;
+	font-family: Comic-Sans;
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #fff;
+}
+#newEntry:hover {
+  background:linear-gradient(to bottom, #b8b4b8 5%, #d167d6 100%);
+	background-color: #b8b4b8;
+}
+#newEntry:active {
+  position: relative;
+  top: 2px;
 }
 
 a.navbar {
@@ -58,7 +105,6 @@ a.navbar:link {
 a.navbar:visited {
   color: #D5C2D9;
 }
-
 
 /* Curtain that blankets screen */
 .modal {
@@ -74,7 +120,6 @@ a.navbar:visited {
  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
  padding-top: 60px;
 }
-
 /* Content in the blanketed screen */
 .modal-content {
  background-color: #fefefe;
@@ -83,17 +128,14 @@ a.navbar:visited {
  padding: 40px;
  width: 23%; /* Could be more or less, depending on screen size */
 }
-
 .animate {
  -webkit-animation: animatezoom 0.6s;
  animation: animatezoom 0.6s
 }
-
 @-webkit-keyframes animatezoom {
  from {-webkit-transform: scale(0)}
  to {-webkit-transform: scale(1)}
 }
-
 @keyframes animatezoom {
  from {transform: scale(0)}
  to {transform: scale(1)}
