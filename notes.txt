@@ -1,2 +1,0 @@
-mongo name: MongoDB
-mongo service password: tacoman13
