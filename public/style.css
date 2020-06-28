@@ -11,6 +11,12 @@
     background-color: #909090;
 }
 
+.entryForm {
+  margin-top: 3px;
+  width: 500px;
+  display: inline-block;
+}
+
 .entryHeader {
     font-size: 22px;
     font-family: Helvetica;
@@ -70,8 +76,9 @@
     color: #dee3de;
 }
 
-#entryBlock {
-  margin-top: 3px;
+#custom {
+  margin-left: 200px;
+  margin-bottom: 300px;
 }
 
 #fieldEntry {

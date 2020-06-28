@@ -1,0 +1,22 @@
+{
+  "name": "draglisting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "createDB.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencersonofhan/draglisting.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spencersonofhan/draglisting/issues"
+  },
+  "homepage": "https://github.com/spencersonofhan/draglisting#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

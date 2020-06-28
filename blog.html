@@ -3,15 +3,15 @@
 	<head>
 		<title>New post</title>
 		<meta charset="utf-8">
-        <link href="style.css" rel="stylesheet">
+        <link href="/static/style.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
 	</head>
 
 	<body class="body">
 		<div class="navbar">
-			<a class="navbar" href="index.html">Home</a>
-			<a class="navbar" href="categories.html">Categories</a>
-			<a class="navbar" href="goals.html">Goals</a>
+			<a class="navbar" href="/">Home</a>
+			<a class="navbar" href="categories">Categories</a>
+			<a class="navbar" href="goals">Goals</a>
 			<button id="login" onclick="document.getElementById('id01').style.display='block'">Login</button>
 			<div id="id01" class="modal">
 			  <span onclick="document.getElementById('id01').style.display='none'"
@@ -74,6 +74,7 @@
 
 		<!-- Using Vue to bring up certain textboxes for different entry options -->
 		<script>
+		// put into public dir
 			var app = new Vue({
 				el: '#blog',
 
@@ -85,43 +86,61 @@
 					change: function(select) {
 						var choiceBlock = document.getElementById("choiceBlock")
 						try {
-							var test = document.getElementById("choiceBlock").lastElementChild
-							test.parentNode.removeChild(test);
+							for (i = 0; i < 2; i++) {
+								var reset = document.getElementById("choiceBlock").lastElementChild
+								reset.parentNode.removeChild(reset);
+							}
 						}
 						catch(TypeError) {
 						}
 
 						// Blog post template
-						var entryBlock = document.createElement("div");
-						entryBlock.setAttribute("id", "entryBlock");
+						var entryForm = document.createElement("form");
+						entryForm.setAttribute("class", "entryForm");
+						entryForm.setAttribute("method", "post")
+						// entryForm.setAttribute("action", "WHERE TO?!?!?")
 
 						var nameText = document.createElement("p");
 						nameText.setAttribute("class", "entryHeader");
-						entryBlock.appendChild(nameText);
+						entryForm.appendChild(nameText);
 
-						var NameInput = document.createElement("input");
-						NameInput.setAttribute("type", "text");
-						NameInput.setAttribute("class", "inputBox");
-						entryBlock.appendChild(NameInput);
+						var nameInput = document.createElement("input");
+						nameInput.setAttribute("type", "text");
+						nameInput.setAttribute("class", "inputBox");
+						nameInput.setAttribute("name", "title");
+						entryForm.appendChild(nameInput);
 
 						var break1 = document.createElement("br");
-						entryBlock.appendChild(break1);
+						entryForm.appendChild(break1);
 
 						var createdText = document.createElement("p");
 						createdText.setAttribute("class", "entryHeader");
-						entryBlock.appendChild(createdText);
+						entryForm.appendChild(createdText);
 
 						var createdInput = document.createElement("input");
 						createdInput.setAttribute("type", "text");
 						createdInput.setAttribute("class", "inputBox");
-						entryBlock.appendChild(createdInput);
+						createdInput.setAttribute("name", "creator");
+						entryForm.appendChild(createdInput);
 
 						var break2 = document.createElement("br");
-						entryBlock.appendChild(break2);
+						entryForm.appendChild(break2);
 
 						var tArea = document.createElement("textarea");
 						tArea.setAttribute("class", "tArea");
-						entryBlock.appendChild(tArea);
+						tArea.setAttribute("name", "tArea");
+						entryForm.appendChild(tArea);
+
+						var submitBox = document.createElement("h4");
+						var submit = document.createElement("input");
+						submit.setAttribute("type", "submit");
+						submit.setAttribute("value", "Submit");
+						submitBox.appendChild(submit);
+						entryForm.appendChild(submitBox);
+
+						// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+						// Implement a rating system
+						// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 						// Finds the value of the option selected
 						let option = select.currentTarget;
@@ -132,30 +151,36 @@
 								nameText.textContent = "Album name";
 								createdText.textContent = "Artist/band";
 
-								// var favoritesText = document.createElement("p");
-								// favoritesText.setAttribute("class", "entryHeader");
-								// favoritesText.textContent = "Favorite song\(s\)?";
-								// // albumBlock.appendChild(favoritesText);
+								var favoritesBlock = document.createElement("div");
+								favoritesBlock.setAttribute("class", "entryForm");
+								favoritesBlock.setAttribute("id", "custom");
 
-								choiceBlock.appendChild(entryBlock);
+								// Why is it in the bottom right corner of the previous block
+								var favoritesText = document.createElement("p");
+								favoritesText.setAttribute("class", "entryHeader");
+								favoritesText.textContent = "Favorite song\(s\)?";
+								favoritesBlock.appendChild(favoritesText);
+
+								choiceBlock.appendChild(entryForm);
+								choiceBlock.appendChild(favoritesBlock);
 								break;
 							case 2: // book
 								nameText.textContent = "Book name";
 								createdText.textContent = "Author";
 
-								choiceBlock.appendChild(entryBlock);
+								choiceBlock.appendChild(entryForm);
 								break;
 							case 3: // movie
 								nameText.textContent = "Movie name";
 								createdText.textContent = "Director";
 
-								choiceBlock.appendChild(entryBlock);
+								choiceBlock.appendChild(entryForm);
 								break;
 							case 4: // vgame
 								nameText.textContent = "Game name";
 								createdText.textContent = "Created by";
 
-								choiceBlock.appendChild(entryBlock);
+								choiceBlock.appendChild(entryForm);
 								break;
 							case 5: // blog
 								console.log("blog")
