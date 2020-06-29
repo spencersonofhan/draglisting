@@ -39,8 +39,8 @@
 					 modal.style.display = "none";
 				 }
 				}
-		</script>
-	</div>
+			</script>
+		</div>
 
 		<div  id="blog">
 				<div id="selector">
@@ -95,10 +95,11 @@
 						}
 
 						// Blog post template
-						var entryForm = document.createElement("form");
+						var entryForm = document.createElement("div");
+						entryForm.setAttribute("id", "entryForm");
 						entryForm.setAttribute("class", "entryForm");
-						entryForm.setAttribute("method", "post")
-						// entryForm.setAttribute("action", "WHERE TO?!?!?")
+						// entryForm.setAttribute("method", "post")
+						// entryForm.setAttribute("action", window.location.href + "/entry");
 
 						var nameText = document.createElement("p");
 						nameText.setAttribute("class", "entryHeader");
@@ -107,7 +108,7 @@
 						var nameInput = document.createElement("input");
 						nameInput.setAttribute("type", "text");
 						nameInput.setAttribute("class", "inputBox");
-						nameInput.setAttribute("name", "title");
+						nameInput.setAttribute("id", "title");
 						entryForm.appendChild(nameInput);
 
 						var break1 = document.createElement("br");
@@ -120,7 +121,7 @@
 						var createdInput = document.createElement("input");
 						createdInput.setAttribute("type", "text");
 						createdInput.setAttribute("class", "inputBox");
-						createdInput.setAttribute("name", "creator");
+						createdInput.setAttribute("id", "creator");
 						entryForm.appendChild(createdInput);
 
 						var break2 = document.createElement("br");
@@ -128,15 +129,16 @@
 
 						var tArea = document.createElement("textarea");
 						tArea.setAttribute("class", "tArea");
-						tArea.setAttribute("name", "tArea");
+						tArea.setAttribute("id", "tArea");
 						entryForm.appendChild(tArea);
 
-						var submitBox = document.createElement("h4");
-						var submit = document.createElement("input");
-						submit.setAttribute("type", "submit");
-						submit.setAttribute("value", "Submit");
-						submitBox.appendChild(submit);
-						entryForm.appendChild(submitBox);
+						var submit= document.createElement("button");
+						submit.setAttribute("onclick", "doPost()");
+						submit.setAttribute("id", "subButton");
+
+
+						entryForm.appendChild(submit);
+
 
 						// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 						// Implement a rating system
@@ -188,16 +190,34 @@
 							default:
 								console.log("default")
 						}
+						try {
+							document.getElementById("subButton").innerText = "Submit";
+						}
+						catch (TypeError){
+						}
 					}
 				},
-
-				computed: {
-
-				},
-
-				created(){
-				}
+				//
+				// computed: {
+				// 
+				// },
+				//
+				// created(){
+				// }
 			});
+		</script>
+		<script>
+			function doPost() {
+				let dtitle = document.getElementById("title").value;
+				let dcreator = document.getElementById("creator").value;
+				let dtArea = document.getElementById("tArea").value;
+				let data = {title: dtitle, creator: dcreator, tArea: dtArea};
+
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", window.location.href + "/entry", true);
+				xhr.setRequestHeader('Content-Type', 'application/json');
+				xhr.send(JSON.stringify(data));
+			}
 		</script>
 	</body>
 </html>
