@@ -28,6 +28,7 @@ app.get('/goals', function(req, res) {
 });
 
 app.post('/blog/entry', function(req, res) {
+  var tempType = req.body.type;
   var tempTitle = req.body.title;
   var tempCreator = req.body.creator;
   var temptArea = req.body.tArea;
@@ -35,7 +36,7 @@ app.post('/blog/entry', function(req, res) {
   MC.connect(mcUrl, {useUnifiedTopology: true, useNewUrlParser: true})
   .then(db => {
     var dbo = db.db("draglisting");
-    dbo.collection('entry').insertOne({title: tempTitle, creator: tempCreator, tArea: temptArea}, function(err, result) {
+    dbo.collection('entry').insertOne({type: tempType, title: tempTitle, creator: tempCreator, tArea: temptArea}, function(err, result) {
       db.close();
     });
   })

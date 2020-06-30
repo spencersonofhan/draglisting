@@ -47,7 +47,7 @@
 					Type of entry
 					<!-- This vue @click method triggers each click, it isn't optimal due to
 				people using keyboard to select aswell. Only works for mouse -->
-					<select>
+					<select id="dropbox">
 						<option value="default"  @click="change">
 							Choose one
 						</option>
@@ -74,16 +74,17 @@
 
 		<!-- Using Vue to bring up certain textboxes for different entry options -->
 		<script>
-		// put into public dir
 			var app = new Vue({
 				el: '#blog',
 
 				data: {
 					options: {default: 0, album: 1, book: 2, movie: 3, vgame: 4, blog: 5},
 					selected: 0,
+					favs: 0,
 				},
 				methods: {
 					change: function(select) {
+						this.favs = 0;
 						var choiceBlock = document.getElementById("choiceBlock")
 						try {
 							for (i = 0; i < 2; i++) {
@@ -101,7 +102,7 @@
 						// entryForm.setAttribute("method", "post")
 						// entryForm.setAttribute("action", window.location.href + "/entry");
 
-						var nameText = document.createElement("p");
+						var nameText = document.createElement("label");
 						nameText.setAttribute("class", "entryHeader");
 						entryForm.appendChild(nameText);
 
@@ -111,10 +112,7 @@
 						nameInput.setAttribute("id", "title");
 						entryForm.appendChild(nameInput);
 
-						var break1 = document.createElement("br");
-						entryForm.appendChild(break1);
-
-						var createdText = document.createElement("p");
+						var createdText = document.createElement("label");
 						createdText.setAttribute("class", "entryHeader");
 						entryForm.appendChild(createdText);
 
@@ -124,9 +122,6 @@
 						createdInput.setAttribute("id", "creator");
 						entryForm.appendChild(createdInput);
 
-						var break2 = document.createElement("br");
-						entryForm.appendChild(break2);
-
 						var tArea = document.createElement("textarea");
 						tArea.setAttribute("class", "tArea");
 						tArea.setAttribute("id", "tArea");
@@ -135,10 +130,7 @@
 						var submit= document.createElement("button");
 						submit.setAttribute("onclick", "doPost()");
 						submit.setAttribute("id", "subButton");
-
-
 						entryForm.appendChild(submit);
-
 
 						// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 						// Implement a rating system
@@ -153,22 +145,11 @@
 								nameText.textContent = "Album name";
 								createdText.textContent = "Artist/band";
 
-								var favoritesBlock = document.createElement("div");
-								favoritesBlock.setAttribute("class", "entryForm");
-								favoritesBlock.setAttribute("id", "custom");
-
-								// Why is it in the bottom right corner of the previous block
-								var favoritesText = document.createElement("p");
-								favoritesText.setAttribute("class", "entryHeader");
-								favoritesText.textContent = "Favorite song\(s\)?";
-								favoritesBlock.appendChild(favoritesText);
-
 								choiceBlock.appendChild(entryForm);
-								choiceBlock.appendChild(favoritesBlock);
 								break;
 							case 2: // book
 								nameText.textContent = "Book name";
-								createdText.textContent = "Author";
+								createdText.textContent = "Author(s)";
 
 								choiceBlock.appendChild(entryForm);
 								break;
@@ -188,35 +169,38 @@
 								console.log("blog")
 								break;
 							default:
-								console.log("default")
 						}
 						try {
 							document.getElementById("subButton").innerText = "Submit";
 						}
 						catch (TypeError){
 						}
-					}
+					},
 				},
-				//
-				// computed: {
-				// 
-				// },
-				//
-				// created(){
-				// }
 			});
 		</script>
 		<script>
 			function doPost() {
+				let dType = document.getElementById("dropbox").value;
 				let dtitle = document.getElementById("title").value;
 				let dcreator = document.getElementById("creator").value;
 				let dtArea = document.getElementById("tArea").value;
-				let data = {title: dtitle, creator: dcreator, tArea: dtArea};
+				let data = {type: dType, title: dtitle, creator: dcreator, tArea: dtArea};
 
 				var xhr = new XMLHttpRequest();
 				xhr.open("POST", window.location.href + "/entry", true);
 				xhr.setRequestHeader('Content-Type', 'application/json');
 				xhr.send(JSON.stringify(data));
+			}
+
+			function addFav() {
+				let favs = document.getElementById("favs");
+
+				let newFav = document.createElement("input");
+				newFav.setAttribute("type", "text");
+				newFav.setAttribute("class", "fav");
+
+				favs.appendChild(newFav);
 			}
 		</script>
 	</body>
