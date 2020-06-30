@@ -2,8 +2,10 @@ const express = require('express');
 const path = require('path');
 const url = require('url');
 const bodyParser = require('body-parser');
-
 const app = express();
+const MC = require('mongodb').MongoClient;
+const mcUrl = "mongodb://localhost:27017/draglisting"
+
 
 app.use('/static', express.static('public'));
 app.use(express.json());
@@ -26,16 +28,18 @@ app.get('/goals', function(req, res) {
 });
 
 app.post('/blog/entry', function(req, res) {
-  console.log(req.body);
-  // var title = req.body.title;
-  // var creator = req.body.creator;
-  // var tArea = req.body.tArea;
-  // console.log(title + " " + creator + " " + tArea);
-  res.sendFile(path.join(__dirname, '/entry.html'));
-})
+  var tempTitle = req.body.title;
+  var tempCreator = req.body.creator;
+  var temptArea = req.body.tArea;
 
-// app.get('/index.html', function(req, res) {
-//   res.sendFile(path.join(__dirname, '/index.html'));
-// })
+  MC.connect(mcUrl, {useUnifiedTopology: true, useNewUrlParser: true})
+  .then(db => {
+    var dbo = db.db("draglisting");
+    dbo.collection('entry').insertOne({title: tempTitle, creator: tempCreator, tArea: temptArea}, function(err, result) {
+      db.close();
+    });
+  })
+  .catch(err =>  console.error(err));
+})
 
 app.listen(8080);
