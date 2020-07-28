@@ -4,7 +4,7 @@ const url = require('url');
 const bodyParser = require('body-parser');
 const app = express();
 const MC = require('mongodb').MongoClient;
-const mcUrl = "mongodb://localhost:27017/draglisting"
+const mcUrl = "mongodb://localhost:27017/blogs"
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '/index.html'));
@@ -29,13 +29,17 @@ app.get('/goals', function(req, res) {
 
 app.get('/blog/entry', function(req, res) {
   let entryInput = url.parse(req.url, true).query;
-  console.log(entryInput);
+  let tempType = entryInput['type'];
+  let tempTitle = entryInput['title'];
+  let tempCreator = entryInput['creator'];
+  let temptArea = entryInput['tarea'];
+
   
 
   MC.connect(mcUrl, {useUnifiedTopology: true, useNewUrlParser: true})
   .then(db => {
-    var dbo = db.db("draglisting");
-    dbo.collection('entry').insertOne({type: tempType, title: tempTitle, creator: tempCreator, tArea: temptArea}, function(err, result) {
+    var dbo = db.db("blogs");
+    dbo.collection('blogs').insertOne({type: tempType, title: tempTitle, creator: tempCreator, tArea: temptArea}, function(err, result) {
       db.close();
     });
   })
