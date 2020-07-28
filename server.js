@@ -6,13 +6,13 @@ const app = express();
 const MC = require('mongodb').MongoClient;
 const mcUrl = "mongodb://localhost:27017/draglisting"
 
-
-app.use('/static', express.static('public'));
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '/index.html'));
+  res.sendFile(path.join(__dirname, '/public/style.css'));
+});
+
+app.get('/style.css', function(req, res) {
+  res.sendFile(path.join(__dirname, '/public/style.css'));
 });
 
 app.get('/blog', function(req, res) {
@@ -27,11 +27,10 @@ app.get('/goals', function(req, res) {
   res.sendFile(path.join(__dirname, '/goals.html'));
 });
 
-app.post('/blog/entry', function(req, res) {
-  var tempType = req.body.type;
-  var tempTitle = req.body.title;
-  var tempCreator = req.body.creator;
-  var temptArea = req.body.tArea;
+app.get('/blog/entry', function(req, res) {
+  let entryInput = url.parse(req.url, true).query;
+  console.log(entryInput);
+  
 
   MC.connect(mcUrl, {useUnifiedTopology: true, useNewUrlParser: true})
   .then(db => {

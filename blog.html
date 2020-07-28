@@ -3,7 +3,7 @@
 	<head>
 		<title>New post</title>
 		<meta charset="utf-8">
-        <link href="/static/style.css" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
 	</head>
 
@@ -181,16 +181,15 @@
 		</script>
 		<script>
 			function doPost() {
-				let dType = document.getElementById("dropbox").value;
-				let dtitle = document.getElementById("title").value;
-				let dcreator = document.getElementById("creator").value;
-				let dtArea = document.getElementById("tArea").value;
-				let data = {type: dType, title: dtitle, creator: dcreator, tArea: dtArea};
+			  let dType = document.getElementById("dropbox").value;
+			  let dTitle = document.getElementById("title").value;
+			  let dCreator = document.getElementById("creator").value;
+			  let dTArea = document.getElementById("tArea").value;
 
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST", window.location.href + "/entry", true);
-				xhr.setRequestHeader('Content-Type', 'application/json');
-				xhr.send(JSON.stringify(data));
+
+			  let urlString = window.location.href + "/entry?type=" + dType
+			  +  "&title=" + dTitle + "&creator=" + dCreator + "&tarea=" + dTArea;
+			  fetch(urlString);
 			}
 
 			function addFav() {
