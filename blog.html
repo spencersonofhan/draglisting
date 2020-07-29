@@ -186,9 +186,16 @@
 			  let dCreator = document.getElementById("creator").value;
 			  let dTArea = document.getElementById("tArea").value;
 
+			  if (dTitle == "" || dCreator == "" || dTArea == ""){
+			  	alert("One or more entries is empty! Please try again");
+			  	return;
+			  }
 
 			  let urlString = window.location.href + "/entry?type=" + dType
 			  +  "&title=" + dTitle + "&creator=" + dCreator + "&tarea=" + dTArea;
+
+			  // GET request with the user inputs as params
+			  // !! FUTURE !! update this so that when submitted, it will redirect the user
 			  fetch(urlString);
 			}
 

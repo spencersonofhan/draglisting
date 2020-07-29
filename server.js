@@ -3,9 +3,10 @@ const path = require('path');
 const url = require('url');
 const bodyParser = require('body-parser');
 const app = express();
-app.set('view engine', 'ejs');
+const sanitize = require('mongo-sanitize');
 const MC = require('mongodb').MongoClient;
 const mcUrl = "mongodb://localhost:27017/blogs";
+app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
   res.render('index.ejs');
@@ -27,15 +28,16 @@ app.get('/goals', function(req, res) {
   res.sendFile(path.join(__dirname, '/goals.html'));
 });
 
+// URL for submitting a blog entry
 app.get('/blog/entry', function(req, res) {
+  // Gets the params from the url
   let entryInput = url.parse(req.url, true).query;
-  let tempType = entryInput['type'];
-  let tempTitle = entryInput['title'];
-  let tempCreator = entryInput['creator'];
-  let temptArea = entryInput['tarea'];
+  let tempType = sanitize( entryInput['type']);
+  let tempTitle = sanitize(entryInput['title']);
+  let tempCreator = sanitize(entryInput['creator']);
+  let temptArea = sanitize(entryInput['tarea']);
 
-  
-
+  // Connects to the local Mongo database and inserts a new item
   MC.connect(mcUrl, {useUnifiedTopology: true, useNewUrlParser: true})
   .then(db => {
     var dbo = db.db("blogs");
