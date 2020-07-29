@@ -3,12 +3,12 @@ const path = require('path');
 const url = require('url');
 const bodyParser = require('body-parser');
 const app = express();
+app.set('view engine', 'ejs');
 const MC = require('mongodb').MongoClient;
-const mcUrl = "mongodb://localhost:27017/blogs"
+const mcUrl = "mongodb://localhost:27017/blogs";
 
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '/index.html'));
-  res.sendFile(path.join(__dirname, '/public/style.css'));
+  res.render('index.ejs');
 });
 
 app.get('/style.css', function(req, res) {
