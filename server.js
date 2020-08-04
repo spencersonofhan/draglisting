@@ -3,7 +3,7 @@
 // const MC = require('mongodb').MongoClient;
 const express = require('express');
 const path = require('path');
-const url = require('url');
+const url = require('url-parse');
 const bodyParser = require('body-parser');
 const Post = require('./models/Post');
 require('dotenv/config');
@@ -21,7 +21,7 @@ app.use('/static', express.static('public'));
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DB_CONNECTION,
    {useUnifiedTopology: true, useNewUrlParser: true},
-   () => console.log("Big money easy money"));
+   () => console.log("\n$$$$$$$$$$$$$$\nEasy big money\n$$$$$$$$$$$$$$"));
 
 
 // IMPORT ROUTES
@@ -33,11 +33,6 @@ app.get('/', function(req, res) {
   res.render('index.ejs');
 });
 
-// app.get('/style.css', function(req, res) {
-//   res.sendFile(path.join(__dirname, '/public/style.css'));
-//
-// });
-
 app.get('/goals', function(req, res) {
   res.render('goals.ejs');
 });
@@ -46,31 +41,20 @@ app.get('/blog', function(req, res) {
   res.render('blog.ejs');
 });
 
-app.post('/blog', function(req, res) {
-  const post = new Post({
-    title: req.body.title,
-    creator: req.body.creator,
-    description: req.body.description,
+app.get('/blog/entry', function(req, res) {
+  var parsedUrl = new url(req.protocol + '://' + req.get('host') + req.originalUrl, true);
+
+  var post = new Post({
+    type: parsedUrl.query.type,
+    title: parsedUrl.query.title,
+    creator: parsedUrl.query.creator,
+    description: parsedUrl.query.tarea,
   });
 
   post.save()
-  .then(data => {
-    res.json(data);
-
-  })
-  .catch(err => {
-    res.json({message: err});
+  .catch(MongoError => {
+    res.status(400).send(MongoError);
   });
-
-//   MC.connect(mcUrl, {useUnifiedTopology: true, useNewUrlParser: true})
-//   .then(db => {
-//     var dbo = db.db("draglisting");
-//     dbo.collection('entry').insertOne({type: tempType, title: tempTitle, creator: tempCreator, tArea: temptArea},
-//        function(err, result) {
-//       db.close();
-//     });
-//   })
-//   .catch(err =>  console.error(err));
 });
 
 app.listen(8080);

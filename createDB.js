@@ -1,9 +1,9 @@
 var MC = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/testin";
+var url = "mongodb://localhost:27017/draglisting";
 
 MC.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
 .then(db => {
-  var dbo = db.db("testin");
+  var dbo = db.db("draglisting");
   // dbo.collection('entry').insertOne({title: "test"}, function(err, result) {
   //   db.close();
   // });
