@@ -5,8 +5,6 @@ const express = require('express');
 const path = require('path');
 const url = require('url');
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const htmlparser = require("htmlparser");
 const Post = require('./models/Post');
 require('dotenv/config');
 
@@ -35,6 +33,11 @@ app.get('/', function(req, res) {
   res.render('index.ejs');
 });
 
+app.get('/style.css', function(req, res) {
+  res.sendFile(path.join(__dirname, '/public/style.css'));
+
+});
+
 app.get('/goals', function(req, res) {
   res.render('goals.ejs');
 });
@@ -53,6 +56,7 @@ app.post('/blog', function(req, res) {
   post.save()
   .then(data => {
     res.json(data);
+
   })
   .catch(err => {
     res.json({message: err});
