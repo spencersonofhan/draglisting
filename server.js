@@ -1,46 +1,72 @@
+"use strict";
+
+// const MC = require('mongodb').MongoClient;
 const express = require('express');
 const path = require('path');
 const url = require('url');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const htmlparser = require("htmlparser");
+const Post = require('./models/Post');
+require('dotenv/config');
+
+// Express object + ejs engine + body parser
 const app = express();
-const MC = require('mongodb').MongoClient;
-const mcUrl = "mongodb://localhost:27017/draglisting"
-
-
-app.use('/static', express.static('public'));
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
 
+// Serves static files from public folder
+app.use('/static', express.static('public'));
+
+// Mongoose object
+const mongoose = require('mongoose');
+mongoose.connect(process.env.DB_CONNECTION,
+   {useUnifiedTopology: true, useNewUrlParser: true},
+   () => console.log("Big money easy money"));
+
+
+// IMPORT ROUTES
+const postsRoute = require('./routes/posts');
+app.use('/categories', postsRoute);
+
+// ROUTES
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '/index.html'));
-});
-
-app.get('/blog', function(req, res) {
-  res.sendFile(path.join(__dirname, '/blog.html'));
-});
-
-app.get('/categories', function(req, res) {
-  res.sendFile(path.join(__dirname, '/categories.html'));
+  res.render('index.ejs');
 });
 
 app.get('/goals', function(req, res) {
-  res.sendFile(path.join(__dirname, '/goals.html'));
+  res.render('goals.ejs');
 });
 
-app.post('/blog/entry', function(req, res) {
-  var tempType = req.body.type;
-  var tempTitle = req.body.title;
-  var tempCreator = req.body.creator;
-  var temptArea = req.body.tArea;
+app.get('/blog', function(req, res) {
+  res.render('blog.ejs');
+});
 
-  MC.connect(mcUrl, {useUnifiedTopology: true, useNewUrlParser: true})
-  .then(db => {
-    var dbo = db.db("draglisting");
-    dbo.collection('entry').insertOne({type: tempType, title: tempTitle, creator: tempCreator, tArea: temptArea}, function(err, result) {
-      db.close();
-    });
+app.post('/blog', function(req, res) {
+  const post = new Post({
+    title: req.body.title,
+    creator: req.body.creator,
+    description: req.body.description,
+  });
+
+  post.save()
+  .then(data => {
+    res.json(data);
   })
-  .catch(err =>  console.error(err));
-})
+  .catch(err => {
+    res.json({message: err});
+  });
+
+//   MC.connect(mcUrl, {useUnifiedTopology: true, useNewUrlParser: true})
+//   .then(db => {
+//     var dbo = db.db("draglisting");
+//     dbo.collection('entry').insertOne({type: tempType, title: tempTitle, creator: tempCreator, tArea: temptArea},
+//        function(err, result) {
+//       db.close();
+//     });
+//   })
+//   .catch(err =>  console.error(err));
+});
 
 app.listen(8080);
