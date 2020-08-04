@@ -3,7 +3,7 @@
 	<head>
 		<title>New post</title>
 		<meta charset="utf-8">
-        <link href="style.css" rel="stylesheet">
+        <link href="/static/style.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
 	</head>
 
@@ -181,17 +181,6 @@
 		</script>
 		<script>
 			function doPost() {
-<<<<<<< HEAD:views/blog.ejs
-				let dType = document.getElementById("dropbox").value;
-				let dTitle = document.getElementById("title").value;
-				let dCreator = document.getElementById("creator").value;
-				let dTArea = document.getElementById("tArea").value;
-
-
-				let urlString = window.location.href + "/entry?type=" + dType
-				+ "&title=" + dTitle + "&creator=" + dCreator + "&tarea=" + dTArea;
-				console.log(urlString);
-=======
 			  let dType = document.getElementById("dropbox").value;
 			  let dTitle = document.getElementById("title").value;
 			  let dCreator = document.getElementById("creator").value;
@@ -208,7 +197,6 @@
 			  // GET request with the user inputs as params
 			  // !! FUTURE !! update this so that when submitted, it will redirect the user
 			  fetch(urlString);
->>>>>>> 357e3b82e5a099571dd04ac70586dd37d6492fc4:blog.html
 			}
 
 			function addFav() {

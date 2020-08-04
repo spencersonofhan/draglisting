@@ -33,10 +33,10 @@ app.get('/', function(req, res) {
   res.render('index.ejs');
 });
 
-app.get('/style.css', function(req, res) {
-  res.sendFile(path.join(__dirname, '/public/style.css'));
-
-});
+// app.get('/style.css', function(req, res) {
+//   res.sendFile(path.join(__dirname, '/public/style.css'));
+//
+// });
 
 app.get('/goals', function(req, res) {
   res.render('goals.ejs');
