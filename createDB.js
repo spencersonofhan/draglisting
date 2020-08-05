@@ -1,28 +1,17 @@
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/mydb";
+var MC = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/draglisting";
 
-MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}).then(db => {
-  var dbo = db.db("mydb");
-  var myobj = [
-    { _id: 154, name: 'John', address: 'Highway 71'},
-    { _id: 155, name: 'Peter', address: 'Lowstreet 4'},
-    { name: 'Amy', address: 'Apple st 652'},
-    { name: 'Hannah', address: 'Mountain 21'},
-    { name: 'Michael', address: 'Valley 345'},
-    { name: 'Sandy', address: 'Ocean blvd 2'},
-    { name: 'Betty', address: 'Green Grass 1'},
-    { name: 'Richard', address: 'Sky st 331'},
-    { name: 'Susan', address: 'One way 98'},
-    { name: 'Vicky', address: 'Yellow Garden 2'},
-    { name: 'Ben', address: 'Park Lane 38'},
-    { name: 'William', address: 'Central st 954'},
-    { name: 'Chuck', address: 'Main Road 989'},
-    { name: 'Viola', address: 'Sideway 1633'}
-  ];
-  dbo.collection("customers").insertMany(myobj, function(err, res) {
-    if (err) throw err;
-    console.log(res);
+MC.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
+.then(db => {
+  var dbo = db.db("draglisting");
+  // dbo.collection('entry').insertOne({title: "test"}, function(err, result) {
+  //   db.close();
+  // });
+  // var myObj = {name: "Larry", address: "Highway 69"};
+  dbo.collection("entry").find({}, {projection: {_id: 0} }).toArray(function(err, result) {
+    console.log(result);
     db.close();
   })
+  // var dbo = db.db("test");
 })
-.catch(error =>  console.error(error));
+.catch(err =>  console.error(err));
