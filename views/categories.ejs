@@ -4,7 +4,7 @@
 		<title>Categories</title>
 		<meta charset="utf-8">
     <link href="/static/style.css" rel="stylesheet">
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
 	</head>
 
 	<body class="body">
@@ -31,13 +31,31 @@
 			</div>
 		</div>
 
-		<div id="categoriesDiv">
-		</div>
-
 		<div id="tenRecent">
-			Um Shalom brother
+			<div  id="trBox">
+				<h2>Most recent</h2>
+				<p v-if="typeof tenRecent === 'undefined'">Loading</p>
+				<div v-else>
+					<div v-for="post in tenRecent">
+						<h2>
+							<u>{{post.title}}</u>
+							<i v-if="post.type == 'book'" class="createdBy">written by {{post.creator}}</i>
+							<i v-else-if="post.type == 'movie'" class="createdBy">directed by {{post.creator}}</i>
+							<i v-else-if="post.type == 'vgame'" class="createdBy">Made by {{post.creator}}</i>
+							<i v-else-if="post.type == 'book'" class="createdBy">written by {{post.creator}}</i>
+							<i v-else class="createdBy">{{post.creator}}</i>
+						</h2>
+						<p id="descriptor">{{post.description}}</p>
+					</div>
+				</div>
+			</div>
 		</div>
 
+		<div id="categoriesDiv">
+
+		</div>
+
+			<!-- Modal JScript -->
 			<script>
 				// Get the modal
 				var modal = document.getElementById('id01');
@@ -50,17 +68,26 @@
 				}
 		  </script>
 
+			<!-- Vue JScript -->
 			<script>
 				var app = new Vue({
 					el: '#tenRecent',
 
 					data: {
-
+						tenRecent: undefined,
 					},
-					
+
 					methods: {
 
 					},
+					created(){
+						// Change to draglisting.co/blog/api
+						fetch("http://localhost:8080/blog/api")
+						.then(response => response.json())
+						.then(json => {
+							this.tenRecent = json;
+						})
+					}
 			});
 			</script>
 

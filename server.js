@@ -57,4 +57,14 @@ app.get('/blog/entry', function(req, res) {
   });
 });
 
+app.get('/blog/api', async(req, res) => {
+  try {
+    var posts = await Post.find().limit(10).sort({_id:-1});
+    res.json(posts);
+  }
+  catch(err) {
+    console.error(err);
+  }
+})
+
 app.listen(8080);

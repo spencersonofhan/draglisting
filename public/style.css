@@ -11,6 +11,10 @@
     background-color: #909090;
 }
 
+.createdBy {
+  font-size: 13px;
+}
+
 .custom {
     margin-top: 10px;
 }
@@ -77,12 +81,16 @@
 }
 
 #categoriesDiv {
-  
+
 }
 
 #currentGoal {
     background-color: #726a95;
     color: #dee3de;
+}
+
+#descriptor {
+  text-indent: 25px;
 }
 
 #entryForm {
@@ -152,6 +160,12 @@
     font-size: 20px;
     margin-top: 2px;
     margin-left: 25px;
+}
+
+#trBox {
+    margin-left: 30%;
+    margin-right: 30%;
+
 }
 
 
