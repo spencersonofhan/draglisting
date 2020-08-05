@@ -1,6 +1,5 @@
 "use strict";
 
-// const MC = require('mongodb').MongoClient;
 const express = require('express');
 const path = require('path');
 const url = require('url-parse');
@@ -19,6 +18,7 @@ app.use('/static', express.static('public'));
 
 // Mongoose object
 const mongoose = require('mongoose');
+// ERROR!!!
 mongoose.connect(process.env.DB_CONNECTION,
    {useUnifiedTopology: true, useNewUrlParser: true},
    () => console.log("\n$$$$$$$$$$$$$$\nEasy big money\n$$$$$$$$$$$$$$"));

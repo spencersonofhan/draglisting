@@ -21,15 +21,11 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.3",
     "express": "^4.17.1",
-<<<<<<< HEAD
     "http-server": "^0.12.3",
     "mongo-sanitize": "^1.1.0",
-    "nodemon": "^2.0.4"
-=======
+    "nodemon": "^2.0.4",
     "htmlparser": "^1.7.7",
     "mongoose": "^5.9.27",
-    "nodemon": "^2.0.4",
     "url-parse": "^1.4.7"
->>>>>>> eceb8cf9547e9cdc9f7a0827fc01c0e1489a912b
   }
 }
