@@ -9,9 +9,9 @@
 
 	<body class="body">
 		<div class="navbar">
-			<a class="navbar" href="/">Home</a>
+			<a class="nonActive" href="/">Home</a>
 			<a class="active" href="#">Categories</a>
-			<a class="navbar" href="goals">Goals</a>
+			<a class="nonActive" href="goals">Goals</a>
 			<button id="login" onclick="document.getElementById('id01').style.display='block'">Login</button>
 			<div id="id01" class="modal">
 			  <span onclick="document.getElementById('id01').style.display='none'"
@@ -25,13 +25,13 @@
 			      <label id="logtext"><b>Password</b></label>
 			      <input type="password" name="psw" required>
 
-			      <button id="loginfr" type="submit">Login</button>
+			      <button id="loginButton" type="submit">Login</button>
 			    </div>
 			  </form>
 			</div>
 		</div>
 
-		<div id="tenRecent">
+		<div class="main">
 			<div  id="trBox">
 				<h2>Most recent</h2>
 				<p v-if="typeof tenRecent === 'undefined'">Loading</p>
@@ -45,7 +45,7 @@
 							<i v-else-if="post.type == 'book'" class="createdBy">written by {{post.creator}}</i>
 							<i v-else class="createdBy">{{post.creator}}</i>
 						</h2>
-						<p id="descriptor">{{post.description}}</p>
+						<p class="descriptor">{{post.description}}</p>
 					</div>
 				</div>
 			</div>
@@ -71,7 +71,7 @@
 			<!-- Vue JScript -->
 			<script>
 				var app = new Vue({
-					el: '#tenRecent',
+					el: '#trBox',
 
 					data: {
 						tenRecent: undefined,
