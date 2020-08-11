@@ -9,9 +9,9 @@
 
 	<body class="body">
 		<div class="navbar">
-			<a class="navbar" href="/">Home</a>
-			<a class="navbar" href="categories">Categories</a>
-			<a class="navbar" href="goals">Goals</a>
+			<a class="nonActive" href="/">Home</a>
+			<a class="nonActive" href="categories">Categories</a>
+			<a class="nonActive" href="goals">Goals</a>
 			<button id="login" onclick="document.getElementById('id01').style.display='block'">Login</button>
 			<div id="id01" class="modal">
 			  <span onclick="document.getElementById('id01').style.display='none'"
@@ -25,7 +25,7 @@
 			      <label id="logtext"><b>Password</b></label>
 			      <input type="password" name="psw" required>
 
-			      <button id="loginfr" type="submit">Login</button>
+			      <button id="loginButton" type="submit">Login</button>
 			    </div>
 			  </form>
 			</div>
@@ -42,11 +42,12 @@
 			</script>
 		</div>
 
-		<div  id="blog">
+		<div class="main">
+			<div id="post">
 				<div id="selector">
-					Type of entry
+					Type of post
 					<!-- This vue @click method triggers each click, it isn't optimal due to
-				people using keyboard to select aswell. Only works for mouse -->
+						people using keyboard to select aswell. Only works for mouse -->
 					<select id="dropbox">
 						<option value="default"  @click="change">
 							Choose one
@@ -70,12 +71,13 @@
 				</div>
 				<div id="choiceBlock">
 				</div>
+			</div>
 		</div>
 
 		<!-- Using Vue to bring up certain textboxes for different entry options -->
 		<script>
 			var app = new Vue({
-				el: '#blog',
+				el: '#post',
 
 				data: {
 					options: {default: 0, album: 1, book: 2, movie: 3, vgame: 4, blog: 5},
@@ -142,31 +144,34 @@
 
 						switch (this.selected) {
 							case 1: // album
-								nameText.textContent = "Album name";
+								nameText.textContent = "Album";
 								createdText.textContent = "Artist/band";
 
 								choiceBlock.appendChild(entryForm);
 								break;
 							case 2: // book
-								nameText.textContent = "Book name";
+								nameText.textContent = "Book";
 								createdText.textContent = "Author(s)";
 
 								choiceBlock.appendChild(entryForm);
 								break;
 							case 3: // movie
-								nameText.textContent = "Movie name";
+								nameText.textContent = "Movie";
 								createdText.textContent = "Director";
 
 								choiceBlock.appendChild(entryForm);
 								break;
 							case 4: // vgame
-								nameText.textContent = "Game name";
+								nameText.textContent = "Game";
 								createdText.textContent = "Created by";
 
 								choiceBlock.appendChild(entryForm);
 								break;
 							case 5: // blog
-								console.log("blog")
+								nameText.textContent = "Title";
+								createdText.textContent = "By whom???";
+
+								choiceBlock.appendChild(entryForm);
 								break;
 							default:
 						}

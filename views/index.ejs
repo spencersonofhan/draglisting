@@ -9,8 +9,8 @@
 	<body class="body">
 		<div class="navbar">
 			<a class="active" href="#">Home</a>
-			<a class="navbar" href="categories">Categories</a>
-			<a class="navbar" href="goals">Goals</a>
+			<a class="nonActive" href="categories">Categories</a>
+			<a class="nonActive" href="goals">Goals</a>
 			<button id="login" onclick="document.getElementById('id01').style.display='block'">Login</button>
 			<div id="id01" class="modal">
 			  <span onclick="document.getElementById('id01').style.display='none'"
@@ -24,59 +24,50 @@
 			      <label id="logtext"><b>Password</b></label>
 			      <input type="password" name="psw" required>
 
-			      <button id="loginfr" type="submit">Login</button>
+			      <button id="loginButton" type="submit">Login</button>
 			    </div>
 			  </form>
 			</div>
-				<script>
-					// Get the modal
-					var modal = document.getElementById('id01');
 
-					// When the user clicks anywhere outside of the modal, close it
-					window.onclick = function(event) {
-					 if (event.target == modal) {
-						 modal.style.display = "none";
-					 }
+			<script>
+				// Get the modal
+				var modal = document.getElementById('id01');
+
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function(event) {
+					if (event.target == modal) {
+						modal.style.display = "none";
 					}
+				}
 			</script>
 		</div>
 
 		<div id="fieldEntry">
 			<a href="blog">
-				<button id="newEntry">
+				<button id="newPost">
 					New post
 				</button>
 			</a>
 		</div>
 
 		<div class="main">
-			<div class="frontTen">
-				This will be a space to put an entry of the recent 10 entries
-			</div>
+			<h1>
+				-- Howdy and welcome to my rating/prototype site --
+			</h1>
 			<p>
-				Fusce non vulputate nibh. Nam fermentum, ligula eget rutrum lacinia, tellus quam ornare elit, quis hendrerit lorem enim porta nisi. Fusce interdum, nisl ac suscipit vulputate, urna lectus luctus turpis, eget aliquam nunc urna ut dolor. Nam luctus augue in facilisis finibus. Fusce eget dolor sagittis, commodo sapien at, imperdiet est. Donec pellentesque justo et lorem condimentum, eget vestibulum augue egestas. Curabitur aliquet pulvinar lacinia. Fusce laoreet, est nec consectetur malesuada, velit ligula viverra nibh, eu interdum magna erat quis enim. Aliquam vitae lectus sed orci venenatis placerat. Fusce vulputate posuere iaculis.
+				I use this site as a blog and prototyping ground for web
+				features.
 			</p>
+			<div id="socials">
+				<a href="https://github.com/spencersonofhan">
+					<img src="/static/githubmark.png" class="socialP" alt="github">
+				</a>
+				<!-- downloaded from https://icons8.com/icons/set/github -->
+				<a href="https://www.linkedin.com/in/spencer-hanson-9a61b51b1/">
+					<img src="/static/linkedinmark.png" class="socialP" alt="github">
+				</a>
+				<!-- downloaded from https://icons8.com/icons/set/linkedin -->
+			</div>
 		</div>
-
-<!-- HARD MAYBE -->
-		<!-- <script>
-			var app = new Vue({
-				el: '#',
-
-				data: {
-
-				},
-
-				methods: {
-
-				},
-
-				computed: {
-				},
-
-				created(){
-				}
-			});
-		</script> -->
 	</body>
 </html>
