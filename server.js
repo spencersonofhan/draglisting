@@ -5,6 +5,7 @@ const path = require('path');
 const url = require('url-parse');
 const bodyParser = require('body-parser');
 const Post = require('./models/Post');
+const cors = require('cors');
 require('dotenv/config');
 
 // Express object + ejs engine + body parser
@@ -16,12 +17,20 @@ app.use(express.json());
 // Serves static files from public folder
 app.use('/static', express.static('public'));
 
+// CORS for allowing Access-Control-Allow-Origin
+app.use(cors());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+});
+
 // Mongoose object
 const mongoose = require('mongoose');
-// ERROR!!!
 mongoose.connect(process.env.DB_CONNECTION,
    {useUnifiedTopology: true, useNewUrlParser: true},
-   () => console.log("\n$$$$$$$$$$$$$$\nEasy big money\n$$$$$$$$$$$$$$"));
+   () => console.log("----------------\n$$$$$$$$$$$$$$$$\n$Big ea$y money$\n$$$$$$$$$$$$$$$$\n----------------"));
 
 
 // IMPORT ROUTES
