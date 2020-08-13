@@ -16,17 +16,24 @@ app.use(express.json());
 // Serves static files from public folder
 app.use('/static', express.static('public'));
 
-// Mongoose object
+// Local Mongoose object
 const mongoose = require('mongoose');
-// ERROR!!!
-mongoose.connect(process.env.DB_CONNECTION,
+const localMongoose = mongoose.createConnection(process.env.DB_CONNECTION,
    {useUnifiedTopology: true, useNewUrlParser: true},
    () => console.log("\n$$$$$$$$$$$$$$\nEasy big money\n$$$$$$$$$$$$$$"));
 
+const onlineMongoose = mongoose.createConnection(process.env.DB_ONLINECONNCT,
+   {useUnifiedTopology: true, useNewUrlParser: true},
+   () => console.log("Succesfully connected to MongoDB"));
 
 // IMPORT ROUTES
+const authRoute = require('./routes/auth');
 const postsRoute = require('./routes/posts');
+app.use('/register', authRoute);
 app.use('/categories', postsRoute);
+
+
+
 
 // ROUTES
 app.get('/', function(req, res) {

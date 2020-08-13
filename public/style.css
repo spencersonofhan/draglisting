@@ -110,6 +110,10 @@ a.nonActive:visited {
     text-align: center;
 }
 
+.rating {
+    cursor: pointer;
+}
+
 .socialP {
     margin-left: 10px;
     margin-right: 10px;
@@ -229,6 +233,14 @@ a.nonActive:visited {
     top: 2px;
 }
 
+#realBad {
+    max-width: 100px;
+    max-height: 90px;
+    width: auto;
+    height: auto;
+}
+
+
 #selector {
     display: inline-block;
 
@@ -252,6 +264,7 @@ a.nonActive:visited {
     font-size: 20px;
     margin-top: 2px;
     margin-left: 25px;
+    margin-bottom: 5px;
 }
 
 #trBox {
@@ -259,7 +272,21 @@ a.nonActive:visited {
     margin-right: 30%;
 
 }
+/* Set the left half's to have a bigger margin-left */
+table {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 
+    border-collapse: collapse;
+}
+
+tr, th  {
+    margin: 0;
+    padding: 0;
+    font-size: 0px;
+    line-height: 0%;
+}
 
 /* Curtain that blankets screen */
 .modal {
