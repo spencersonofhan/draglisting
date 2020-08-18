@@ -9,25 +9,35 @@ const PostSchema = new Schema({
     type: String,
     required: true
   },
+
   title: {
     type: String,
     required: true
   },
+
   creator: {
     type: String,
     required: true
   },
+
   description: {
     type: String,
     required: true
   },
+
+  rating: {
+      type: String,
+      required: true
+  },
+
   date: {
     type: Date,
     default: Date.now
   },
+
 },
 {
   collection: 'posts'
 });
 
-module.exports = mongoose.model('Posts', PostSchema);
+module.exports = mongoose.model('posts', PostSchema);
