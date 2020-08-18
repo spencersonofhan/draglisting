@@ -5,6 +5,7 @@
 		<meta charset="utf-8">
         <link href="/static/style.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 	</head>
 
 	<body class="body">
@@ -69,8 +70,49 @@
 						</option>
 					</select>
 				</div>
-				<div id="choiceBlock">
+				<div id="choiceBlock" value="0">
 				</div>
+
+				<table id="rating" style="display:none">
+					<tr>
+						<th>
+							<img id="realBad" class="rating" src="/static/realbadmark.png" alt="realbad" @click="rate(0)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-left-half.png" alt="left-half-star1" @click="rate(1)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-right-half.png" @click="rate(2)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-left-half.png" @click="rate(3)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-right-half.png" @click="rate(4)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-left-half.png" @click="rate(5)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-right-half.png" @click="rate(6)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-left-half.png" @click="rate(7)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-right-half.png" @click="rate(8)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-left-half.png" @click="rate(9)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-right-half.png" @click="rate(10)">
+						</th>
+						<th>
+							<button id="subButton" @click="doPost">Submit</button>
+						</th>
+					</tr>
+				</table>
 			</div>
 		</div>
 
@@ -83,9 +125,15 @@
 					options: {default: 0, album: 1, book: 2, movie: 3, vgame: 4, blog: 5},
 					selected: 0,
 					favs: 0,
+					rating: 0,
+					LEHalfPath: "/static/empty-left-half.png",
+					REHalfPath: "/static/empty-right-half.png",
+					LFHalfPath: "/static/full-left-half.png",
+					RFHalfPath: "/static/full-right-half.png"
 				},
 				methods: {
 					change: function(select) {
+						document.getElementById("rating").style.display = "none";
 						this.favs = 0;
 						var choiceBlock = document.getElementById("choiceBlock")
 						try {
@@ -97,12 +145,10 @@
 						catch(TypeError) {
 						}
 
-						// Blog post template
+						// Post template. Gets recreated every time this function's called
 						var entryForm = document.createElement("div");
 						entryForm.setAttribute("id", "entryForm");
 						entryForm.setAttribute("class", "entryForm");
-						// entryForm.setAttribute("method", "post")
-						// entryForm.setAttribute("action", window.location.href + "/entry");
 
 						var nameText = document.createElement("label");
 						nameText.setAttribute("class", "entryHeader");
@@ -129,43 +175,44 @@
 						tArea.setAttribute("id", "tArea");
 						entryForm.appendChild(tArea);
 
-						var submit= document.createElement("button");
-						submit.setAttribute("onclick", "doPost()");
-						submit.setAttribute("id", "subButton");
-						entryForm.appendChild(submit);
-
 						// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 						// Implement a rating system
 						// !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 						// Finds the value of the option selected
 						let option = select.currentTarget;
 						this.selected = this.options[String(option.getAttribute("value"))];
 
+						// Switch statement based on the selected options value
 						switch (this.selected) {
 							case 1: // album
 								nameText.textContent = "Album";
 								createdText.textContent = "Artist/band";
 
 								choiceBlock.appendChild(entryForm);
+								document.getElementById("rating").style.display = "block";
 								break;
 							case 2: // book
 								nameText.textContent = "Book";
 								createdText.textContent = "Author(s)";
 
 								choiceBlock.appendChild(entryForm);
+								document.getElementById("rating").style.display = "block";
 								break;
 							case 3: // movie
 								nameText.textContent = "Movie";
 								createdText.textContent = "Director";
 
 								choiceBlock.appendChild(entryForm);
+								document.getElementById("rating").style.display = "block";
 								break;
 							case 4: // vgame
 								nameText.textContent = "Game";
 								createdText.textContent = "Created by";
 
 								choiceBlock.appendChild(entryForm);
+								document.getElementById("rating").style.display = "block";
 								break;
 							case 5: // blog
 								nameText.textContent = "Title";
@@ -181,29 +228,61 @@
 						catch (TypeError){
 						}
 					},
+
+					rate: function(numberRating) {
+						var counterRating = 0;
+						this.rating= numberRating;
+						// JQuery to find the table, loop through the columns
+						var table = $("table");
+						table.find('tr').each(function() {
+							$(this).find('th').each(function() {
+								var img = $(this).eq(0)[0]['firstChild']
+								// set the src to the empty half
+								if (counterRating < 1) {
+									counterRating++;
+									return;
+								}
+								// If odd, do a left-half
+								if (counterRating % 2 == 1){
+									img.setAttribute("src", "/static/empty-left-half.png");
+									if (counterRating <= numberRating) {
+										img.setAttribute("src", "/static/full-left-half.png")
+									}
+								}
+								else{  // If even, do a right-half
+									img.setAttribute("src", "/static/empty-right-half.png");
+									if (counterRating <= numberRating) {
+										img.setAttribute("src", "/static/full-right-half.png")
+									}
+								}
+								counterRating++;
+							});
+						});
+					},
+					doPost: function(selected) {
+						let dType = document.getElementById("dropbox").value;
+						let dTitle = document.getElementById("title").value;
+						let dCreator = document.getElementById("creator").value;
+						let dTArea = document.getElementById("tArea").value;
+						let dRating = this.rating;
+
+						if (dTitle == "" || dCreator == "" || dTArea == ""){
+							alert("One or more entries is empty! Please try again");
+							return;
+						}
+
+						let urlString = window.location.href + "/entry?type=" + String(dType)
+						+  "&title=" + String(dTitle) + "&creator=" + String(dCreator) + "&tarea="
+						+ String(dTArea) + "&rating=" + String(dRating);
+
+						// !! FUTURE !! update this so that when submitted, it will redirect the user
+						// GET request with the user inputs as params
+						fetch(urlString);
+					},
 				},
 			});
 		</script>
 		<script>
-			function doPost() {
-			  let dType = document.getElementById("dropbox").value;
-			  let dTitle = document.getElementById("title").value;
-			  let dCreator = document.getElementById("creator").value;
-			  let dTArea = document.getElementById("tArea").value;
-
-			  if (dTitle == "" || dCreator == "" || dTArea == ""){
-			  	alert("One or more entries is empty! Please try again");
-			  	return;
-			  }
-
-			  let urlString = window.location.href + "/entry?type=" + dType
-			  +  "&title=" + dTitle + "&creator=" + dCreator + "&tarea=" + dTArea;
-
-			  // GET request with the user inputs as params
-			  // !! FUTURE !! update this so that when submitted, it will redirect the user
-			  fetch(urlString);
-			}
-
 			function addFav() {
 				let favs = document.getElementById("favs");
 
@@ -214,5 +293,6 @@
 				favs.appendChild(newFav);
 			}
 		</script>
+
 	</body>
 </html>
