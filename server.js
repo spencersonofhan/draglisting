@@ -4,7 +4,6 @@ const express = require('express');
 const path = require('path');
 const url = require('url-parse');
 const bodyParser = require('body-parser');
-const Post = require('./models/Post');
 require('dotenv/config');
 
 // Express object + ejs engine + body parser
@@ -17,14 +16,15 @@ app.use(express.json());
 app.use('/static', express.static('public'));
 
 // Local Mongoose object
+const Post = require('./models/Post');
 const mongoose = require('mongoose');
-const localMongoose = mongoose.createConnection(process.env.DB_CONNECTION,
+const localMongoose = mongoose.connect(process.env.DB_CONNECTION,
    {useUnifiedTopology: true, useNewUrlParser: true},
    () => console.log("\n$$$$$$$$$$$$$$\nEasy big money\n$$$$$$$$$$$$$$"));
 
-const onlineMongoose = mongoose.createConnection(process.env.DB_ONLINECONNCT,
-   {useUnifiedTopology: true, useNewUrlParser: true},
-   () => console.log("Succesfully connected to MongoDB"));
+// const onlineMongoose = mongoose.createConnection(process.env.DB_ONLINECONNCT,
+//    {useUnifiedTopology: true, useNewUrlParser: true},
+//    () => console.log("Succesfully connected to MongoDB"));
 
 // IMPORT ROUTES
 const authRoute = require('./routes/auth');
@@ -56,21 +56,22 @@ app.get('/blog/entry', function(req, res) {
     title: parsedUrl.query.title,
     creator: parsedUrl.query.creator,
     description: parsedUrl.query.tarea,
+    rating: parsedUrl.query.rating,
   });
 
   post.save()
   .catch(MongoError => {
-    res.status(400).send(MongoError);
+      res.status(400).send(MongoError);
   });
 });
 
 app.get('/blog/api', async(req, res) => {
   try {
-    var posts = await Post.find().limit(10).sort({_id:-1});
-    res.json(posts);
+        var posts = await Post.find().limit(10).sort({_id:-1});
+        res.json(posts);
   }
   catch(err) {
-    console.error(err);
+      console.error(err);
   }
 })
 
