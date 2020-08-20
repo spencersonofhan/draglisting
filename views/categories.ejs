@@ -95,8 +95,8 @@
 
 					},
 					created(){
-						// Change to draglisting.co/blog/api
-						fetch("http://localhost:8080/blog/api")
+						// Switch to localhost for testing
+						fetch("http://draglisting.co/blog/api")
 						.then(response => response.json())
 						.then(json => {
 							this.tenRecent = json;

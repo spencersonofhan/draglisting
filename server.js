@@ -5,6 +5,7 @@ const path = require('path');
 const url = require('url-parse');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
+const cors = require('cors');
 require('dotenv/config');
 
 // Express object + ejs engine + body parser
@@ -19,6 +20,15 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // Serves static files from public folder
 app.use('/static', express.static('public'));
 
+// CORS for allowing Access-Control-Allow-Origin
+app.use(cors());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+});
+
 // Local Mongoose object
 const Post = require('./models/Post');
 const mongoose = require('mongoose');
@@ -27,8 +37,9 @@ const localMongoose = mongoose.connect(process.env.DB_CONNECTION,
    () => console.log("\n$$$$$$$$$$$$$$\nEasy big money\n$$$$$$$$$$$$$$"));
 
 // IMPORT ROUTES
-const authRoute = require('./routes/auth');
+// const authRoute = require('./routes/auth');
 const postsRoute = require('./routes/posts');
+const authRoute = require('./routes/auth');
 // const authorize = require('./routes/verifyTKN');
 app.use('/login', authRoute);
 app.use('/categories', postsRoute);
