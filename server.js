@@ -34,7 +34,7 @@ const Post = require('./models/Post');
 const mongoose = require('mongoose');
 const localMongoose = mongoose.connect(process.env.DB_CONNECTION,
    {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true},
-   () => console.log("\n$$$$$$$$$$$$$$\nEasy big money\n$$$$$$$$$$$$$$"));
+   () => console.log("\n$$$$$$$$$$$$$$$$$$\n$ Big Ea$y Money $\n$$$$$$$$$$$$$$$$$$"));
 
 // IMPORT ROUTES
 // const authRoute = require('./routes/auth');
