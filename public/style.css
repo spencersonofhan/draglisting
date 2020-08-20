@@ -93,6 +93,11 @@ a.nonActive:visited {
     width: 25%;
 }
 
+.logtext {
+    color: #F7F7FF;
+    font-size: 16px;
+}
+
 .main {
     background-color: #F7F7FF;
     color: #333;
@@ -194,11 +199,6 @@ a.nonActive:visited {
 
 #loginButton {
     margin-left: 88.5%;
-}
-
-#logtext {
-    color: #F7F7FF;
-    font-size: 16px;
 }
 
 #newPost {

@@ -3,13 +3,15 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
+// Change "name" to username, i dont want their real name
 const UserSchema = new mongoose.Schema({
-    name: {
+    username: {
         type: String,
         required: true,
-        min: 6,
+        min: 5,
         trim: true
     },
+
     age: {
         type: Number,
         default: 0,
@@ -19,6 +21,7 @@ const UserSchema = new mongoose.Schema({
             }
         }
     },
+
     email: {
         type: String,
         required: true,
@@ -30,6 +33,7 @@ const UserSchema = new mongoose.Schema({
             }
         }
     },
+
     password: {
         type: String,
         required: true,
@@ -37,10 +41,14 @@ const UserSchema = new mongoose.Schema({
         max: 1024,
         min: 6
     },
+
     date: {
         type: Date,
         default: Date.now
     }
+},
+{
+  collection: 'users'
 });
 
 // UserSchema.methods.newAuthToken = async function(){

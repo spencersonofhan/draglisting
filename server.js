@@ -4,6 +4,7 @@ const express = require('express');
 const path = require('path');
 const url = require('url-parse');
 const bodyParser = require('body-parser');
+const favicon = require('serve-favicon');
 const cors = require('cors');
 require('dotenv/config');
 
@@ -12,6 +13,9 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Favicon
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Serves static files from public folder
 app.use('/static', express.static('public'));
@@ -29,17 +33,15 @@ app.use(function (req, res, next) {
 const Post = require('./models/Post');
 const mongoose = require('mongoose');
 const localMongoose = mongoose.connect(process.env.DB_CONNECTION,
-   {useUnifiedTopology: true, useNewUrlParser: true},
-   () => console.log("----------------\n$$$$$$$$$$$$$$$$\n$Big ea$y money$\n$$$$$$$$$$$$$$$$\n----------------"));
-
-// const onlineMongoose = mongoose.createConnection(process.env.DB_ONLINECONNCT,
-//    {useUnifiedTopology: true, useNewUrlParser: true},
-//    () => console.log("Succesfully connected to MongoDB"));
+   {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true},
+   () => console.log("\n$$$$$$$$$$$$$$\nEasy big money\n$$$$$$$$$$$$$$"));
 
 // IMPORT ROUTES
 // const authRoute = require('./routes/auth');
 const postsRoute = require('./routes/posts');
-// app.use('/register', authRoute);
+const authRoute = require('./routes/auth');
+// const authorize = require('./routes/verifyTKN');
+app.use('/login', authRoute);
 app.use('/categories', postsRoute);
 
 
