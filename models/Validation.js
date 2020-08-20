@@ -6,7 +6,7 @@ const Joi = require('@hapi/joi');
 
 const ValidifyNewUser = (data) => {
     const userSchema = Joi.object({
-        username: Joi.string().min(6).required(),
+        username: Joi.string().min(5).required(),
         age: Joi.number().integer().min(18).max(115),
         email: Joi.string().min(6).required().email(),
         password: Joi.string().min(6).required(),
