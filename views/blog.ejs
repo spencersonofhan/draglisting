@@ -15,20 +15,21 @@
 			<a class="nonActive" href="goals">Goals</a>
 			<button id="login" onclick="document.getElementById('id01').style.display='block'">Login</button>
 			<div id="id01" class="modal">
-			  <span onclick="document.getElementById('id01').style.display='none'"
-				class="close" title="Close Modal">&times;</span>
+			  	<span onclick="document.getElementById('id01').style.display='none'"
+				class="close" title="Close Modal">&times;
+				</span>
 
-			  <form class="modal-content animate" action="!!!FIX!!!">
-			    <div class="container">
-			      <label id="logtext"><b>Username</b></label>
-			      <input type="text" name="uname" required>
+				<form class="modal-content animate" onsubmit="login(this); return false;">
+	  			    <div class="container">
+	  			      <label class="logtext"><b>Username</b></label>
+	  			      <input type="text" name="username" required>
 
-			      <label id="logtext"><b>Password</b></label>
-			      <input type="password" name="psw" required>
+	  			      <label class="logtext"><b>Password</b></label>
+	  			      <input type="password" name="password" required>
 
-			      <button id="loginButton" type="submit">Login</button>
-			    </div>
-			  </form>
+	  			      <button id="loginButton" type="submit">Login</button>
+	  			    </div>
+				</form>
 			</div>
 			<script>
 				// Get the modal
@@ -39,6 +40,20 @@
 				 if (event.target == modal) {
 					 modal.style.display = "none";
 				 }
+				}
+
+				async function login(element) {
+					// !Create error checks!
+					var username = element[0].value.trim();
+					var password = element[1].value.trim();
+
+					var xhr = new XMLHttpRequest();
+					var location = window.location;
+					var postURL = location.protocol + "//" + location.host + "/login";
+
+					xhr.open("POST", postURL, true);
+					xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+					xhr.send(JSON.stringify({"username": username, "password": password}));
 				}
 			</script>
 		</div>
