@@ -24,7 +24,7 @@ app.use('/static', express.static('public'));
 app.use(cors());
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
+    res.header("Access-Control-Allow-Methods", "GET,POST");
     res.header("Access-Control-Allow-Headers", "*");
     next();
 });
@@ -72,8 +72,9 @@ app.get('/blog/entry', function(req, res) {
   });
 
   post.save()
+  .then(promise => { res.sendStatus(200) })
   .catch(MongoError => {
-      res.status(400).send(MongoError);
+      res.sendStatus(400);
   });
 });
 
@@ -81,8 +82,7 @@ app.get('/blog/api', async(req, res) => {
   try {
         var posts = await Post.find().limit(10).sort({_id:-1});
         res.json(posts);
-  }
-  catch(err) {
+  } catch(err) {
       console.error(err);
   }
 })

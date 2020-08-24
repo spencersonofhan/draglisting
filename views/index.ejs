@@ -4,6 +4,7 @@
 		<title>Draglisting</title>
 		<meta charset="utf-8">
         <link href="/static/style.css" rel="stylesheet">
+		<script type="text/javascript" src="/static/login.js"></script>
 	</head>
 
 	<body class="body">
@@ -29,10 +30,9 @@
 			    </div>
 			  </form>
 			</div>
-
 			<script>
 				// Get the modal
-				var modal = document.getElementById('id01');
+				const modal = document.getElementById('id01');
 
 				// When the user clicks anywhere outside of the modal, close it
 				window.onclick = function(event) {
@@ -40,21 +40,9 @@
 						modal.style.display = "none";
 					}
 				}
-
-				async function login(element) {
-					// !Create error checks!
-					var username = element[0].value.trim();
-					var password = element[1].value.trim();
-
-					var xhr = new XMLHttpRequest();
-					var location = window.location;
-					var postURL = location.protocol + "//" + location.host + "/login";
-
-					xhr.open("POST", postURL, true);
-					xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-					xhr.send(JSON.stringify({"username": username, "password": password}));
-				}
 			</script>
+
+
 		</div>
 
 		<!-- Make this look cool! -->
@@ -68,11 +56,10 @@
 
 		<div class="main">
 			<h1>
-				-- Howdy and welcome to my rating/prototype site --
+				-- Howdy and welcome to my rating/prototype site! --
 			</h1>
 			<p>
-				I use this site as a blog and prototyping ground for web
-				features.
+				I use this site as a blog and 'firing-range' for web tech I am testing out.
 			</p>
 			<div id="socials">
 				<a href="https://github.com/spencersonofhan">

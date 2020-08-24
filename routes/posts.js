@@ -14,19 +14,23 @@ router.get('/', authorize, (req, res) => {
     res.render('categories.ejs');
 });
 
-router.get('/movies', (req, res) => {
+router.get('/movies', authorize, (req, res) => {
     res.send('big money');
 });
 
-router.get('/books', (req, res) => {
+router.get('/books', authorize, (req, res) => {
     res.send('big money');
 });
 
-router.get('/vgs', (req, res) => {
+router.get('/vgs', authorize, (req, res) => {
     res.send('big money');
 });
 
-router.get('/albums', (req, res) => {
+router.get('/albums', authorize, (req, res) => {
+    res.send('big money');
+});
+
+router.get('/blogs', authorize, (req, res) => {
     res.send('big money');
 });
 

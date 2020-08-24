@@ -66,6 +66,9 @@ a.nonActive:visited {
 }
 
 .descriptor {
+    margin-left: 15px;
+
+    text-align: left;
     text-indent: 25px;
 }
 
@@ -115,6 +118,16 @@ a.nonActive:visited {
     text-align: center;
 }
 
+.post {
+    text-align: left;
+    font-size: 26px;
+}
+
+.postRating {
+    margin-left: 5px;
+    font-size: 16px;
+}
+
 .rating {
     cursor: pointer;
 }
@@ -135,6 +148,10 @@ a.nonActive:visited {
     resize: none;
     width: 93%;
     height: 150px;
+}
+
+.title {
+
 }
 
 #blog {
@@ -268,8 +285,8 @@ a.nonActive:visited {
 }
 
 #trBox {
-    margin-left: 30%;
-    margin-right: 30%;
+    margin-left: 10%;
+    margin-right: 10%;
 
 }
 /* Set the left half's to have a bigger margin-left */
