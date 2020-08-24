@@ -18,6 +18,7 @@ app.use(express.json());
 // LOGIN
 router.post('/', async(req, res) => {
     // Validate POST data
+    console.log(req.body);
     const valid = ValidifyLogin(req.body);
     // Catch block executed if the POST data conforms to userSchema
     try {
@@ -37,11 +38,10 @@ router.post('/', async(req, res) => {
     if(!validPassword) { return res.status(400).send("Email or password is incorrect");}
     // if(!validPassword) { return res.status(400).send("password"); }
 
-    // Create and send authentication token	
-    const token = jwt.sign({_id: usernameCheck._id}, process.env.SUPER_SECRET_TKN, {expiresIn: '60m'});
-	//  const token = jwt.sign({_id: usernameCheck._id}, process.env.SUPER_SECRET_TKN, {expiresIn: '1m'});
+    // Create and send authentication token
+    const token = jwt.sign({_id: usernameCheck._id}, process.env.SUPER_SECRET_TKN, {expiresIn: '1h'});
+    // const token = jwt.sign({_id: usernameCheck._id}, process.env.SUPER_SECRET_TKN, {expiresIn: '1m'});
     res.header('Set-Cookie', "auth-token=" + token).sendStatus(200);
-    // res.header('auth-token', token).end();
 });
 
 // CREATE USER
