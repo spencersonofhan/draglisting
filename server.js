@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Favicon
+console.log(path.join(__dirname, 'public', 'favicon.ico'));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Serves static files from public folder
