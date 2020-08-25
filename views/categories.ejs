@@ -37,7 +37,7 @@
 				<h2>Most recent</h2>
 				<p v-if="typeof tenRecent === 'undefined'">Loading posts...</p>
 				<div v-else>
-					<div v-for="post in tenRecent">
+					<div class="postBox" v-for="post in tenRecent">
 						<h2 class="post">
 							<u class="title">{{post.title}}</u>
 							<i v-if="post.type == 'book'" class="createdBy">written by {{post.creator}}</i>
@@ -76,10 +76,22 @@
 
 					data: {
 						tenRecent: undefined,
+						r1: false,
+						r2: false,
+						r3: false,
+						r4: false,
+						r5: false,
+						r6: false,
+						r7: false,
+						r8: false,
+						r9: false,
+						r10: true
 					},
 
 					methods: {
-
+						colorRate: function(e) {
+							console.log("naynay");
+						}
 					},
 					created(){
 						fetch(location.protocol + "//" + location.host + "/blog/api")

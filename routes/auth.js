@@ -21,25 +21,30 @@ router.post('/', async(req, res) => {
     console.log(req.body);
     const valid = ValidifyLogin(req.body);
     // Catch block executed if the POST data conforms to userSchema
-    try {
-        return res.status(400).send(valid['error'].details[0].message);
-    }
+    try { return res.status(401).send(valid['error'].details[0].message); }
     catch(validationOK) {
         ;
     }
 
     // Check email has linked account
     const usernameCheck = await User.findOne({username: req.body.username});
-    if (!usernameCheck) { return res.status(400).send("Email or password is incorrect"); }
-    // if (!usernameCheck) { return res.status(400).send("username"); }
+    // if (!usernameCheck) { return res.status(401).send("Email or password is incorrect"); }
+    if (!usernameCheck) { return res.status(400).send("username"); }
 
     // Check if password is correct
     const validPassword = await bcrypt.compare(req.body.password, usernameCheck.password);
-    if(!validPassword) { return res.status(400).send("Email or password is incorrect");}
-    // if(!validPassword) { return res.status(400).send("password"); }
+    // if(!validPassword) { return res.status(401).send("Email or password is incorrect");}
+    if(!validPassword) { return res.status(400).send("password"); }
+
+    // Check if user is an admin
+    if (usernameCheck.role === "admin"){
+
+    }
 
     // Create and send authentication token
-    const token = jwt.sign({_id: usernameCheck._id}, process.env.SUPER_SECRET_TKN, {expiresIn: '1h'});
+    const token = jwt.sign({_id: usernameCheck._id},
+                            process.env.SUPER_SECRET_TKN,
+                            {expiresIn: '1h'});
     // const token = jwt.sign({_id: usernameCheck._id}, process.env.SUPER_SECRET_TKN, {expiresIn: '1m'});
     res.header('Set-Cookie', "auth-token=" + token).sendStatus(200);
 });

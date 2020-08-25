@@ -1,5 +1,5 @@
 /*
-    Color pallet used:
+    Color pallet used for website:
     #0F2439 GO AGGIES!
     #495867
     #577399
@@ -7,6 +7,20 @@
     #F7F7FF
     #FE5F55
  */
+
+ /*
+    Rating color pallet:
+    #000000
+    #0F2439
+    #258EA6
+    #549F93
+    #AD8350
+    #D98324
+    #31D843
+    #DDF45B
+    #EE4266
+    #FE5F55
+  */
 
 .body {
     background-color: #577399;
@@ -121,6 +135,19 @@ a.nonActive:visited {
 .post {
     text-align: left;
     font-size: 26px;
+}
+
+.postBox {
+    margin-bottom: 15px;
+    border-bottom: 2px dotted black;
+}
+
+.rate1 {
+    background-color: #000000;
+}
+
+.rate10 {
+    background-color: #FE5F55;
 }
 
 .postRating {
@@ -285,8 +312,8 @@ a.nonActive:visited {
 }
 
 #trBox {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 3%;
+    margin-right: 3%;
 
 }
 /* Set the left half's to have a bigger margin-left */

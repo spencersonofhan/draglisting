@@ -6,13 +6,30 @@ const url = require('url-parse');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const cors = require('cors');
+const app = express();
+const authorize = require('./routes/verifyTKN');
 require('dotenv/config');
 
+// Local Mongoose object
+const Post = require('./models/Post');
+const mongoose = require('mongoose');
+const localMongoose = mongoose.connect(process.env.DB_CONNECTION,
+   {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true},
+   () => console.log("\n$$$$$$$$$$$$$$$$$$\n$ Big Ea$y Money $\n$$$$$$$$$$$$$$$$$$"));
+
+
+const adminRoute = require('./routes/admin');
+app.use('/admin', adminRoute);
+
+
+
 // Express object + ejs engine + body parser
-const app = express();
+// const app = express();
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+
 
 // Favicon
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -29,21 +46,17 @@ app.use(function (req, res, next) {
     next();
 });
 
-// Local Mongoose object
-const Post = require('./models/Post');
-const mongoose = require('mongoose');
-const localMongoose = mongoose.connect(process.env.DB_CONNECTION,
-   {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true},
-   () => console.log("\n$$$$$$$$$$$$$$$$$$\n$ Big Ea$y Money $\n$$$$$$$$$$$$$$$$$$"));
 
-// IMPORT ROUTES
-// const authRoute = require('./routes/auth');
-const postsRoute = require('./routes/posts');
-const authRoute = require('./routes/auth');
-// const authorize = require('./routes/verifyTKN');
-app.use('/login', authRoute);
-app.use('/categories', postsRoute);
 
+   // IMPORT ROUTES
+   const postsRoute = require('./routes/posts');
+   const authRoute = require('./routes/auth');
+   // const adminRoute = require('./routes/admin');
+   // const authorize = require('./routes/verifyTKN');
+   // ^ Might be needed if you require JWT on every page^
+   app.use('/login', authRoute);
+   app.use('/categories', postsRoute);
+   // app.use('/admin', adminRoute);
 
 
 
@@ -56,11 +69,13 @@ app.get('/goals', function(req, res) {
   res.render('goals.ejs');
 });
 
-app.get('/blog', function(req, res) {
+// Route for post creation page (blog.ejs)
+app.get('/blog', authorize, function(req, res) {
   res.render('blog.ejs');
 });
 
-app.get('/blog/entry', function(req, res) {
+// Route to create post
+app.get('/blog/entry', authorize, function(req, res) {
   var parsedUrl = new url(req.protocol + '://' + req.get('host') + req.originalUrl, true);
 
   var post = new Post({

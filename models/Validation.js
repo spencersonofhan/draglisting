@@ -25,5 +25,6 @@ const ValidifyLogin = (data) => {
     return userSchema.validate(data);
 };
 
+
 module.exports.ValidifyNewUser = ValidifyNewUser;
 module.exports.ValidifyLogin = ValidifyLogin;
