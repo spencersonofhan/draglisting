@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Draglisting</title>
+		<meta charset="utf-8">
+        <link href="/static/style.css" rel="stylesheet">
+		<script type="text/javascript" src="/static/login.js"></script>
+	</head>
+
+	<body class="body">
+		<div class="navbar">
+			<a class="active" href="#">Home</a>
+			<a class="nonActive" href="categories">Categories</a>
+			<a class="nonActive" href="goals">Goals</a>
+
+			<button id="login" onclick="document.getElementById('id01').style.display='block'">Login</button>
+			<div id="id01" class="modal">
+			  <span onclick="document.getElementById('id01').style.display='none'"
+				class="close" title="Close Modal">&times;</span>
+
+			  <form class="modal-content animate" onsubmit="login(this); return false;">
+			    <div class="container">
+			      <label class="logtext"><b>Username</b></label>
+			      <input type="text" name="username" required>
+
+			      <label class="logtext"><b>Password</b></label>
+			      <input type="password" name="password" required>
+
+			      <button id="loginButton" type="submit">Login</button>
+			    </div>
+			  </form>
+			</div>
+			<script>
+				// Get the modal
+				const modal = document.getElementById('id01');
+
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function(event) {
+					if (event.target == modal) {
+						modal.style.display = "none";
+					}
+				}
+			</script>
+
+
+		</div>
+
+		<!-- Make this look cool! -->
+		<div id="fieldEntry">
+			<a href="blog">
+				<button id="newPost">
+					New post
+				</button>
+			</a>
+		</div>
+
+		<div class="main">
+			<h1>
+				-- Howdy and welcome to my rating/prototype site! --
+			</h1>
+			<p>
+				I use this site as a blog and 'firing-range' for web tech I am testing out.
+			</p>
+			<div id="socials">
+				<a href="https://github.com/spencersonofhan">
+					<img src="/static/githubmark.png" class="socialP" alt="github">
+				</a>
+				<!-- downloaded from https://icons8.com/icons/set/github -->
+				<a href="https://www.linkedin.com/in/spencer-hanson-9a61b51b1/">
+					<img src="/static/linkedinmark.png" class="socialP" alt="github">
+				</a>
+				<!-- downloaded from https://icons8.com/icons/set/linkedin -->
+			</div>
+		</div>
+	</body>
+</html>

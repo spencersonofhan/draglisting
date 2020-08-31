@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>New post</title>
+		<meta charset="utf-8">
+        <link href="/static/style.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+		<script type="text/javascript" src="/static/login.js"></script>
+	</head>
+
+	<body class="body">
+		<div class="navbar">
+			<a class="nonActive" href="/">Home</a>
+			<a class="nonActive" href="categories">Categories</a>
+			<a class="nonActive" href="goals">Goals</a>
+			<button id="login" onclick="document.getElementById('id01').style.display='block'">Login</button>
+			<div id="id01" class="modal">
+			  	<span onclick="document.getElementById('id01').style.display='none'"
+				class="close" title="Close Modal">&times;
+				</span>
+
+				<form class="modal-content animate" onsubmit="login(this); return false;">
+	  			    <div class="container">
+	  			      <label class="logtext"><b>Username</b></label>
+	  			      <input type="text" name="username" required>
+
+	  			      <label class="logtext"><b>Password</b></label>
+	  			      <input type="password" name="password" required>
+
+	  			      <button id="loginButton" type="submit">Login</button>
+	  			    </div>
+				</form>
+			</div>
+			<script>
+				// Get the modal
+				var modal = document.getElementById('id01');
+
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function(event) {
+					if (event.target == modal) {
+					 modal.style.display = "none";
+						}
+					}
+			</script>
+		</div>
+
+		<div class="main">
+			<div id="post">
+				<div id="selector">
+					Type of post
+					<!-- This vue @click method triggers each click, it isn't optimal due to
+						people using keyboard to select aswell. Only works for mouse -->
+					<select id="dropbox">
+						<option value="default"  @click="change">
+							Choose one
+						</option>
+						<option value="album"  @click="change">
+							Album
+						</option>
+						<option value="book"  @click="change">
+							Book
+						</option>
+						<option value="movie"  @click="change">
+							Movie
+						</option>
+						<option value="vgame"  @click="change">
+							Video game
+						</option>
+						<option value="blog"  @click="change">
+							Blog post
+						</option>
+					</select>
+				</div>
+				<div id="choiceBlock" value="0">
+				</div>
+
+				<table id="rating" style="display:none">
+					<tr>
+						<th>
+							<img id="realBad" class="rating" src="/static/realbadmark.png" alt="realbad" @click="rate(0)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-left-half.png" alt="left-half-star1" @click="rate(1)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-right-half.png" @click="rate(2)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-left-half.png" @click="rate(3)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-right-half.png" @click="rate(4)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-left-half.png" @click="rate(5)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-right-half.png" @click="rate(6)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-left-half.png" @click="rate(7)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-right-half.png" @click="rate(8)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-left-half.png" @click="rate(9)">
+						</th>
+						<th>
+							<img class="rating" src="/static/empty-right-half.png" @click="rate(10)">
+						</th>
+						<th>
+							<button id="subButton" @click="doPost">Submit</button>
+						</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<!-- Using Vue to bring up certain textboxes for different entry options -->
+		<script>
+			var app = new Vue({
+				el: '#post',
+
+				data: {
+					options: {default: 0, album: 1, book: 2, movie: 3, vgame: 4, blog: 5},
+					selected: 0,
+					favs: 0,
+					rating: 0,
+					LEHalfPath: "/static/empty-left-half.png",
+					REHalfPath: "/static/empty-right-half.png",
+					LFHalfPath: "/static/full-left-half.png",
+					RFHalfPath: "/static/full-right-half.png"
+				},
+				methods: {
+					change: function(select) {
+						document.getElementById("rating").style.display = "none";
+						this.favs = 0;
+						var choiceBlock = document.getElementById("choiceBlock")
+						try {
+							for (i = 0; i < 2; i++) {
+								var reset = document.getElementById("choiceBlock").lastElementChild
+								reset.parentNode.removeChild(reset);
+							}
+						}
+						catch(TypeError) {
+						}
+
+						// Post template. Gets recreated every time this function's called
+						var entryForm = document.createElement("div");
+						entryForm.setAttribute("id", "entryForm");
+						entryForm.setAttribute("class", "entryForm");
+
+						var nameText = document.createElement("label");
+						nameText.setAttribute("class", "entryHeader");
+						entryForm.appendChild(nameText);
+
+						var nameInput = document.createElement("input");
+						nameInput.setAttribute("type", "text");
+						nameInput.setAttribute("class", "inputBox");
+						nameInput.setAttribute("id", "title");
+						entryForm.appendChild(nameInput);
+
+						var createdText = document.createElement("label");
+						createdText.setAttribute("class", "entryHeader");
+						entryForm.appendChild(createdText);
+
+						var createdInput = document.createElement("input");
+						createdInput.setAttribute("type", "text");
+						createdInput.setAttribute("class", "inputBox");
+						createdInput.setAttribute("id", "creator");
+						entryForm.appendChild(createdInput);
+
+						var tArea = document.createElement("textarea");
+						tArea.setAttribute("class", "tArea");
+						tArea.setAttribute("id", "tArea");
+						entryForm.appendChild(tArea);
+
+
+						// Finds the value of the option selected
+						let option = select.currentTarget;
+						this.selected = this.options[String(option.getAttribute("value"))];
+
+						// Switch statement based on the selected options value
+						switch (this.selected) {
+							case 1: // album
+								nameText.textContent = "Album";
+								createdText.textContent = "Artist/band";
+
+								choiceBlock.appendChild(entryForm);
+								document.getElementById("rating").style.display = "block";
+								break;
+							case 2: // book
+								nameText.textContent = "Book";
+								createdText.textContent = "Author(s)";
+
+								choiceBlock.appendChild(entryForm);
+								document.getElementById("rating").style.display = "block";
+								break;
+							case 3: // movie
+								nameText.textContent = "Movie";
+								createdText.textContent = "Director";
+
+								choiceBlock.appendChild(entryForm);
+								document.getElementById("rating").style.display = "block";
+								break;
+							case 4: // vgame
+								nameText.textContent = "Game";
+								createdText.textContent = "Created by";
+
+								choiceBlock.appendChild(entryForm);
+								document.getElementById("rating").style.display = "block";
+								break;
+							case 5: // blog
+								nameText.textContent = "Title";
+								createdText.textContent = "By whom???";
+
+								choiceBlock.appendChild(entryForm);
+								break;
+							default:
+						}
+						try {
+							document.getElementById("subButton").innerText = "Submit";
+						}
+						catch (TypeError){
+						}
+					},
+
+					rate: function(numberRating) {
+						var counterRating = 0;
+						this.rating= numberRating;
+						// JQuery to find the table, loop through the columns
+						var table = $("table");
+						table.find('tr').each(function() {
+							$(this).find('th').each(function() {
+								var img = $(this).eq(0)[0]['firstChild']
+								// set the src to the empty half
+								if (counterRating < 1) {
+									counterRating++;
+									return;
+								}
+								// If odd, do a left-half
+								if (counterRating % 2 == 1){
+									img.setAttribute("src", "/static/empty-left-half.png");
+									if (counterRating <= numberRating) {
+										img.setAttribute("src", "/static/full-left-half.png")
+									}
+								}
+								else{  // If even, do a right-half
+									img.setAttribute("src", "/static/empty-right-half.png");
+									if (counterRating <= numberRating) {
+										img.setAttribute("src", "/static/full-right-half.png")
+									}
+								}
+								counterRating++;
+							});
+						});
+					},
+					doPost: function(selected) {
+						let dType = document.getElementById("dropbox").value;
+						let dTitle = document.getElementById("title").value;
+						let dCreator = document.getElementById("creator").value;
+						let dTArea = document.getElementById("tArea").value;
+						let dRating = this.rating;
+
+						if (dTitle == "" || dCreator == "" || dTArea == ""){
+							alert("One or more entries is empty! Please try again");
+							return;
+						}
+
+						let urlString = window.location.href + "/entry?type=" + String(dType)
+						+  "&title=" + String(dTitle) + "&creator=" + String(dCreator) + "&tarea="
+						+ String(dTArea) + "&rating=" + String(dRating);
+
+						// !! FUTURE !! update this so that when submitted, it will redirect the user
+						// GET request with the user inputs as params
+						fetch(urlString)
+						.then(promise => {
+							if (promise['status'] === 200) {
+								window.location.replace(window.location.protocol + "//"
+								+ window.location.host);
+							}
+							else if (promise['status'] === 400) {
+								alert("Server side error has occured, please try again later");
+							}
+						});
+					},
+				},
+			});
+		</script>
+		<script>
+			function addFav() {
+				let favs = document.getElementById("favs");
+
+				let newFav = document.createElement("input");
+				newFav.setAttribute("type", "text");
+				newFav.setAttribute("class", "fav");
+
+				favs.appendChild(newFav);
+			}
+		</script>
+	</body>
+</html>

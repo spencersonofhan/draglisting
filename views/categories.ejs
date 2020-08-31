@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Categories</title>
+		<meta charset="utf-8">
+	    <link href="/static/style.css" rel="stylesheet">
+	    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+		<script type="text/javascript" src="/static/login.js"></script>
+	</head>
+
+	<body class="body">
+		<div class="navbar">
+			<a class="nonActive" href="/">Home</a>
+			<a class="active" href="#">Categories</a>
+			<a class="nonActive" href="goals">Goals</a>
+			<button id="login" onclick="document.getElementById('id01').style.display='block'">Login</button>
+			<div id="id01" class="modal">
+			  <span onclick="document.getElementById('id01').style.display='none'"
+				class="close" title="Close Modal">&times;</span>
+
+			  <form class="modal-content animate" onsubmit="login(this); return false;">
+			    <div class="container">
+			      <label class="logtext"><b>Username</b></label>
+			      <input type="text" name="username" required>
+
+			      <label class="logtext"><b>Password</b></label>
+			      <input type="password" name="password" required>
+
+			      <button id="loginButton" type="submit">Login</button>
+			    </div>
+			  </form>
+			</div>
+		</div>
+
+		<div class="main">
+			<div  id="trBox">
+				<h2>Most recent</h2>
+				<p v-if="typeof tenRecent === 'undefined'">Loading posts...</p>
+				<div v-else>
+					<div class="postBox" v-for="post in tenRecent">
+						<h2 class="post">
+							<u class="title">{{post.title}}</u>
+							<i v-if="post.type == 'book'" class="createdBy">written by {{post.creator}}</i>
+							<i v-else-if="post.type == 'movie'" class="createdBy">directed by {{post.creator}}</i>
+							<i v-else-if="post.type == 'vgame'" class="createdBy">Made by {{post.creator}}</i>
+							<i v-else-if="post.type == 'book'" class="createdBy">written by {{post.creator}}</i>
+							<i v-else class="createdBy">by {{post.creator}}</i>
+							<b class="postRating">{{post.rating}}/10</b>
+						</h2>
+						<p class="descriptor">{{post.description}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="categoriesDiv">
+
+		</div>
+			<!-- Modal JScript -->
+			<script>
+				// Get the modal
+				var modal = document.getElementById('id01');
+
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function(event) {
+					 if (event.target == modal) {
+						 modal.style.display = "none";
+					 	}
+				}
+			</script>
+
+			<!-- Vue JScript -->
+			<script>
+				var app = new Vue({
+					el: '#trBox',
+
+					data: {
+						tenRecent: undefined,
+						r1: false,
+						r2: false,
+						r3: false,
+						r4: false,
+						r5: false,
+						r6: false,
+						r7: false,
+						r8: false,
+						r9: false,
+						r10: true
+					},
+
+					methods: {
+						colorRate: function(e) {
+							console.log("naynay");
+						}
+					},
+					created(){
+						fetch(location.protocol + "//" + location.host + "/blog/api")
+						.then(response => response.json())
+						.then(json => {
+							this.tenRecent = json;
+						})
+					}
+			});
+			</script>
+
+		</div>
+	</body>
+</html>

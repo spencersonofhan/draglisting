@@ -1,4 +1,5 @@
 idea*.md
+.idea
 *.pyc
 __pycache__
 venv
@@ -6,3 +7,7 @@ venv
 .vscode
 db.sqlite3
 *.zip
+.env
+.txt
+node_modules/
+forever.json
