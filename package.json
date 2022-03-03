@@ -37,7 +37,7 @@
     "mongoose": "^5.9.27",
     "nodemon": "^2.0.4",
     "serve-favicon": "^2.5.0",
-    "url-parse": "^1.4.7",
+    "url-parse": "^1.5.9",
     "validator": "^13.1.1"
   }
 }
